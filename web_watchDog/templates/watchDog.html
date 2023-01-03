@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang = "zh-Hant">
+    <head>
+        <meta charset="utf-8">
+        <title> Watchdog </title>
+        <style type = "text/css">
+            body {
+                background-color: #FFFCE0;
+                font-size: 25pt;
+                color: rgb(93, 93, 93);
+            }
+            #header {
+                background-color: #CBFBDE;
+                width: 1000px;
+                height: 250px;
+                border: 5px solid white;
+                margin: 30px auto;
+            }
+            #content {
+                background-color: #CBFBDE;
+                width: 1000px;
+                border: 5px solid white;
+                margin: 30px auto;
+            }
+            table {
+                width: 800px;
+                margin: 20px auto;
+                border: 5px dashed ;
+            }
+            #f1 table {
+                width: 500px;
+                border: 0px;
+                font-size: 20pt;
+                margin: 20px auto;
+            }
+            #f1 td {
+                text-align: right;
+                padding: 5px 20px;
+            }
+            #f1 td+td {
+                text-align: left;
+            }
+            caption {
+                letter-spacing: 5pt;
+                margin: 15px auto;
+            }
+            tr, td {
+                text-align: center;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id = "header"> <h1>WATCHDOG</h1> </div>
+        <div id = "content">
+            <img src="{{ url_for('video_feed') }}">
+        </div>
+    </body>
+</html>
