@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Response
 import cv2
 import numpy as np
-# import nxt_call
+import nxt_call
 
 app = Flask(__name__)
 
@@ -74,7 +74,7 @@ def gen_frames():
 
             if detected:
                 cv2.imwrite('capture.jpg', original)
-                # nxt_call.call()
+                nxt_call.call()
                 cap.release()
 
 
