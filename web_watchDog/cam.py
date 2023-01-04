@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Response
 import cv2
 import numpy as np
+# import nxt_call
 
 app = Flask(__name__)
 
@@ -9,6 +10,8 @@ def gen_frames():
     CAMERA_DEVICE_ID = 0
     IMAGE_WIDTH = 640
     IMAGE_HEIGHT = 480
+    detected = False
+    wait = 0
     try:
         # create video capture
         cap = cv2.VideoCapture(CAMERA_DEVICE_ID)
@@ -21,11 +24,11 @@ def gen_frames():
         ret, frame = cap.read()
         avg = cv2.blur(frame, (4, 4))
         avg_float = np.float32(avg)
-
         # Loop to continuously get images
         while True:
             # 讀取一幅影格
             ret, frame = cap.read()
+            original = frame
 
             # 若讀取至影片結尾，則跳出
             if ret == False:
@@ -63,9 +66,17 @@ def gen_frames():
 
                 # 畫出外框
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                # nxt_call.call()
+
 
             # 畫出等高線（除錯用）
             # cv2.drawContours(frame, cnts, -1, (0, 255, 255), 2)
+
+            if detected:
+                cv2.imwrite('capture.jpg', original)
+                # nxt_call.call()
+                cap.release()
+
 
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
@@ -73,9 +84,13 @@ def gen_frames():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
             # 更新平均影像
-            cv2.accumulateWeighted(blur, avg_float, 0.01)
+            cv2.accumulateWeighted(blur, avg_float, 0.001)
             avg = cv2.convertScaleAbs(avg_float)
 
+            if len(cnts) > 0 and wait > 50:
+                detected = True
+
+            wait += 1
             # if key pressed is 'Esc' then exit the loop
             if cv2.waitKey(33) == 27:
                 break

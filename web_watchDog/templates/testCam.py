@@ -9,6 +9,7 @@ if __name__ == "__main__":
         # create video capture
         cap = cv2.VideoCapture(CAMERA_DEVICE_ID)
 
+
         # set resolution to 320x240 to reduce latency 
         cap.set(3, IMAGE_WIDTH)
         cap.set(4, IMAGE_HEIGHT)
@@ -18,6 +19,8 @@ if __name__ == "__main__":
             # Read the frames from a camera
             _, frame = cap.read()
 
+            print(frame.shape)
+            cv2.imwrite('capture.jpg', frame)
             # show image
             cv2.imshow('frame', frame)
 
