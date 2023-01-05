@@ -1,7 +1,6 @@
 # 111LSA-第六組-瘋狂看門狗 Crazy Watch Dog-README
 
-## ppt連結
-- https://www.canva.com/design/DAFWoibUPZs/bkghll5kDm6ulb2HZlNdxw/view?utm_content=DAFWoibUPZs&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
+
 
 ## 動機發想 Motivation
 
@@ -140,3 +139,5 @@ cv2.imwrite('/Watchdog/web_watchDog/static/capture.jpg', original)
 - [OpenCV test](https://github.com/automaticdai/rpi-object-detection#41-install-the-environment-on-raspberry-pi)
 -  [Flask Reference -1](https://shengyu7697.github.io/python-flask-camera-streaming/)
 
+## 簡報連結(內包含成果影片)
+- https://www.canva.com/design/DAFWoibUPZs/bkghll5kDm6ulb2HZlNdxw/view?utm_content=DAFWoibUPZs&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
