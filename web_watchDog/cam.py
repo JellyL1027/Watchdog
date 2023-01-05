@@ -59,7 +59,7 @@ def gen_frames():
                 if cv2.contourArea(c) < 2500:
                     continue
 
-                # 偵測到物體，可以自己加上處理的程式碼在這裡...
+                
 
                 # 計算等高線的外框範圍
                 (x, y, w, h) = cv2.boundingRect(c)
@@ -91,9 +91,8 @@ def gen_frames():
                 detected = True
 
             wait += 1
-            # if key pressed is 'Esc' then exit the loop
-            if cv2.waitKey(33) == 27:
-                break
+            
+            
     except Exception as e:
         print(e)
     finally:
