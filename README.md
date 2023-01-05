@@ -124,7 +124,7 @@ cv2.imwrite('/Watchdog/web_watchDog/static/capture.jpg', original)
     - 網頁對接
     - 樹莓派指令處理 
 - 109213041 林國棟
-    - 樹梅派利用藍芽連結NXT
+    - 樹莓派利用藍芽連結NXT
     - 網頁製作 
 - 109213056 趙子安 
     - 製作PPT
