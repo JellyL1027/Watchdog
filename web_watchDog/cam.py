@@ -2,16 +2,27 @@ from flask import Flask, render_template, Response
 import cv2
 import numpy as np
 import nxt_call
+import datetime
 
 app = Flask(__name__)
+
+
+def write_text(img, text, position, color):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    size = 1
+    thickness = 1
+    lineType = cv2.LINE_AA
+    cv2.putText(img, text, position, font, size, color, thickness, lineType)
+
+    return img
 
 
 def gen_frames():
     CAMERA_DEVICE_ID = 0
     IMAGE_WIDTH = 640
     IMAGE_HEIGHT = 480
-    detected = False
     wait = 0
+    detect_times = 0;
     try:
         # create video capture
         cap = cv2.VideoCapture(CAMERA_DEVICE_ID)
@@ -28,11 +39,6 @@ def gen_frames():
         while True:
             # 讀取一幅影格
             ret, frame = cap.read()
-            original = frame
-
-            # 若讀取至影片結尾，則跳出
-            if ret == False:
-                break
 
             # 模糊處理
             blur = cv2.blur(frame, (4, 4))
@@ -68,15 +74,24 @@ def gen_frames():
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 # nxt_call.call()
 
-
             # 畫出等高線（除錯用）
             # cv2.drawContours(frame, cnts, -1, (0, 255, 255), 2)
+            dt = datetime.datetime.today()
+            dt = dt.strftime("%Y/%m/%d %H:%M:%S")
+            write_text(frame, dt, (10, 40), (0, 255, 255))
+            if detect_times == 30:
+                write_text(frame, "START TO ATTACK", (10, 140), (0, 0, 255))
+            original = frame
+            if detect_times > 30:
+                write_text(original, "WARNING", (10, 90), (0, 0, 255))
 
-            if detected:
                 cv2.imwrite('capture.jpg', original)
                 nxt_call.call()
                 cap.release()
 
+            if len(cnts) > 0 and wait > 50:
+                write_text(frame, "WARNING", (10, 90), (0, 0, 255))
+                detect_times += 1
 
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
@@ -86,9 +101,8 @@ def gen_frames():
             # 更新平均影像
             cv2.accumulateWeighted(blur, avg_float, 0.001)
             avg = cv2.convertScaleAbs(avg_float)
-
-            if len(cnts) > 0 and wait > 50:
-                detected = True
+            if len(cnts) == 0:
+                detect_times = 0
 
             wait += 1
             
@@ -100,14 +114,17 @@ def gen_frames():
         cv2.destroyAllWindows()
         cap.release()
 
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
 @app.route('/')
 def index():
     return render_template('watchDog.html')
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
