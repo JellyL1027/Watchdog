@@ -78,7 +78,7 @@
  ``` mkdir static ```
 - 修改存圖片路徑
 ``` vim cam.py ```
-- On line 76 （請使用pwd 確認static 路徑 圖檔名稱設置為capture.jpg）
+- On line 88 （請使用pwd 確認static 路徑 圖檔名稱設置為capture.jpg）
 ```python
 cv2.imwrite('/Watchdog/web_watchDog/static/capture.jpg', original)
 ```
