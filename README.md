@@ -10,6 +10,10 @@
 ## 功能 Function
 - 當偵測到門外有可疑人士移動，會擷取一張即時影像，讓屋主知道要被狗追著打的人是誰
 - 機器狗可以追著入侵者進行攻擊
+
+### 2022.01.22 新增功能 New Function
+- 照片可顯示日期時間
+- 如偵測到後會顯示開始攻擊字樣
 ## 樹莓派軟體使用技術
 ### 影像部分
 - 利用OpenCV-Python 進行影像處理
@@ -62,7 +66,7 @@
 ### OpenCV Setting
 - 將專案下載下來 Clone
 
-``` git clone https://github.com/JellyL1027/Watchdog.git ```
+``` git clone https://github.com/NCNU-OpenSource/Watchdog.git ```
 - 請先接上攝像頭 Plug Webcam in 
 - 測試 Testing
 ``` python3 /camera-test/camera-test.py ```
